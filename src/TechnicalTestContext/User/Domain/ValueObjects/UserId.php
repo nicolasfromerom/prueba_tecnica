@@ -1,4 +1,7 @@
 <?php
+
+namespace Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Domain\ValueObjects;
+
 class UserId {
     private string $value;
 
