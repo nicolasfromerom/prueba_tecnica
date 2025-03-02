@@ -8,6 +8,10 @@ class Router {
         $this->routes['GET'][$uri] = $controller;
     }
 
+    public function post($uri, $controller) {
+        $this->routes['POST'][$uri] = $controller;
+    }
+
     public function dispatch($uri, $method) {
         // Obtener solo la parte del path (sin parámetros ni dominio)
         $uri = parse_url($uri, PHP_URL_PATH);
@@ -15,12 +19,18 @@ class Router {
         // Normalizar URI para entornos como Laragon (ajustar según sea necesario)
         $basePath = '/prueba-tecnica'; // Ajusta esto si la estructura cambia
         $uri = str_replace($basePath, '', $uri);
+        $handler = $this->routes[$method][$uri] ?? null;
+
+        if ($handler instanceof \Closure) {
+            call_user_func($handler);
+            return;
+        }
 
         // Verificar si la ruta está registrada
-        if (isset($this->routes[$method][$uri])) {
+        if (is_string($handler)) {
             list($controller, $action) = explode('@', $this->routes[$method][$uri]);
             
-            $controllerClass = "Nicolasfromerom\\PruebaTecnica\\App\\Controllers\\$controller";
+            $controllerClass = "Nicolasfromerom\\PruebaTecnica\\TechnicalTestContext\\User\\Infrastructure\\Http\\$controller";
 
             // Verificar si la clase existe antes de instanciar
             if (!class_exists($controllerClass)) {

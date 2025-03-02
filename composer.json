@@ -13,6 +13,7 @@
         }
     ],
     "require": {
-        "doctrine/orm": "^3.3"
+        "doctrine/orm": "^3.3",
+        "symfony/cache": "^6.4"
     }
 }

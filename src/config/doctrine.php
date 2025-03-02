@@ -1,20 +1,29 @@
 <?php
 
+use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\ORMSetup;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
+
+require_once '../vendor/autoload.php';
 
 $paths = [__DIR__ . '/../src'];
 $isDevMode = true;
 
 // Configuración de la conexión a la base de datos
-$dbParams = [
-    'driver'   => 'pdo_mysql',
+$cache = new ArrayAdapter();
+$config = ORMSetup::createAttributeMetadataConfiguration([__DIR__ . '/../src/Domain/Entity'], $isDevMode, null, $cache);
+
+
+$connection = DriverManager::getConnection([
+    'driver' => 'pdo_mysql',
+    'host' => '127.0.0.1',
     'user'     => 'root',
     'password' => '',
-    'dbname'   => 'users',
-];
+    'dbname'   => 'prueba-tecnica',
+], $config);
 
-$config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
-$entityManager = EntityManager::create($dbParams, $config);
+
+$entityManager = new EntityManager($connection, $config);
 
 return $entityManager;
