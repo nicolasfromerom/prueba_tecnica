@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Application\DTO;
 
 class RegisterUserRequest {
