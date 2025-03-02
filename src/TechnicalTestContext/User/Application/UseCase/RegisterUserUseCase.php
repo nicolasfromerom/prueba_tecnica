@@ -22,21 +22,22 @@ class RegisterUserUseCase {
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function execute(RegisterUserRequest $request): void {
-        // if ($this->userRepository->findByEmail(new UserEmail($request->email))) {
-        //     throw new \Exception("Email is already in use");
-        // }
+    public function execute(RegisterUserRequest $request): User {
+        if ($this->userRepository->findByEmail(new UserEmail($request->email))) {
+            throw new \Exception("Email is already in use");
+        }
 
         $user = new User(
-            new UserId(uniqid()),
             new UserName($request->name),
             new UserEmail($request->email),
             new UserPassword($request->password),
             new UserCreatedAt()
         );
 
-        $this->userRepository->save($user);
+        $userCreated = $this->userRepository->save($user);
         $this->eventDispatcher->dispatch(new UserRegisteredEvent($user));
+
+        return $userCreated;
 
     }
 }

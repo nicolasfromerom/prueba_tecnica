@@ -4,19 +4,13 @@ require_once '../vendor/autoload.php';
 
 use Nicolasfromerom\PruebaTecnica\Core\EventDispatcher;
 use Nicolasfromerom\PruebaTecnica\Core\Router;
+use Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Application\EventHandler\SendWelcomeEmailHandler;
 use Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Application\UseCase\RegisterUserUseCase;
+use Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Domain\Events\UserRegisteredEvent;
 use Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Infrastructure\Http\RegisterUserController;
 use Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Infrastructure\Persistence\DoctrineUserRepository;
 
-// $eventDispatcher = new EventDispatcher();
 
-// // Suscribimos el manejador del evento
-// $eventDispatcher->subscribe(UserRegisteredEvent::class, function ($event) {
-//     $handler = new SendWelcomeEmailHandler();
-//     $handler->handle($event);
-// });
-
-// $registerUserUseCase = new RegisterUserUseCase($userRepository, $eventDispatcher);
 
 
 header('Content-Type: application/json');
@@ -29,6 +23,17 @@ $router = new Router();
 // Definir rutas
 $userRepository = new DoctrineUserRepository($entityManager);
 $eventDispatcher = new EventDispatcher();
+$registerUserUseCase = new RegisterUserUseCase($userRepository, $eventDispatcher);
+
+
+$eventDispatcher = new EventDispatcher();
+
+// Suscribimos el manejador del evento
+$eventDispatcher->subscribe(UserRegisteredEvent::class, function ($event) {
+    $handler = new SendWelcomeEmailHandler();
+    $handler->handle($event);
+});
+
 $registerUserUseCase = new RegisterUserUseCase($userRepository, $eventDispatcher);
 
 // Pasar la instancia del caso de uso al controlador

@@ -13,8 +13,9 @@ use Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Domain\ValueObjects\
 #[ORM\Table(name: "users")]
 class User {
     #[ORM\Id]
-    #[ORM\Column(type: "string", unique: true)]
-    private string $id;
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: "integer")]
+    private ?int $id = null;
 
     #[ORM\Column(type: "string", length: 100)]
     private string $name;
@@ -28,8 +29,7 @@ class User {
     #[ORM\Column(type: "datetime_immutable")]
     private \DateTimeImmutable $createdAt;
 
-    public function __construct(UserId $id, UserName $name, UserEmail $email, UserPassword $password, UserCreatedAt $createdAt) {
-        $this->id = $id->getValue();
+    public function __construct(UserName $name, UserEmail $email, UserPassword $password, UserCreatedAt $createdAt) {
         $this->name = $name->getValue();
         $this->email = $email->getValue();
         $this->password = $password->getValue();

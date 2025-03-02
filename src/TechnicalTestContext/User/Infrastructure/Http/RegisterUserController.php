@@ -3,6 +3,7 @@
 namespace Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Infrastructure\Http;
 
 use Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Application\DTO\RegisterUserRequest;
+use Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Application\DTO\UserResponseDTO;
 use Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Application\UseCase\RegisterUserUseCase;
 
 class RegisterUserController {
@@ -21,9 +22,9 @@ class RegisterUserController {
 
         try {
             $request = new RegisterUserRequest($data['name'], $data['email'], $data['password']);
-            $this->registerUserUseCase->execute($request);
-
-            echo json_encode($request);
+            $user = $this->registerUserUseCase->execute($request);
+            $response = new UserResponseDTO($user->getId()->getValue(), $user->getName()->getValue(), $user->getEmail()->getValue(), $user->getPassword()->getValue(), $user->getCreatedAt()->getValue()->format('Y-m-d H:i:s'));
+            echo json_encode($response);
         } catch (\Exception $e) {
             echo json_encode(["error" => $e->getMessage()]);
         }
