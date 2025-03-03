@@ -16,10 +16,11 @@ $config = ORMSetup::createAttributeMetadataConfiguration([__DIR__ . '/../src/Dom
 
 $connection = DriverManager::getConnection([
     'driver' => 'pdo_mysql',
-    'host' => '127.0.0.1',
+    'host' => 'db',
     'user'     => 'root',
-    'password' => '',
-    'dbname'   => 'prueba-tecnica',
+    'password' => 'rootpassword',
+    'dbname'   => 'pruebatecnica',
+    'port' => 3306,
 ], $config);
 
 

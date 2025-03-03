@@ -7,6 +7,6 @@ use Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Domain\Events\UserRe
 class SendWelcomeEmailHandler {
     public function handle(UserRegisteredEvent $event): void {
         $user = $event->getUser();
-        echo json_encode(["message" => "Welcome email sent to " . $user->getEmail()->getValue()]);
+        //echo json_encode(["message" => "Welcome email sent to " . $user->getEmail()->getValue()]);
     }
 }

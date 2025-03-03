@@ -1,19 +1,31 @@
-version: '3.8'
 services:
-  php:
-    image: php:8.1-cli
+  app:
+    build: .
     container_name: php_app
     volumes:
       - .:/var/www/html
-    working_dir: /var/www/html
+    ports:
+      - "8000:8000"
     depends_on:
-      - mysql
-  mysql:
+      - db
+    environment:
+      - DATABASE_URL=mysql://root:password@db:3306/prueba_tecnica
+    command: php -S 0.0.0.0:8000 -t public
+
+  db:
     image: mysql:8.0
     container_name: mysql_db
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: prueba-tecnica
-      MYSQL_USER: root
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
     ports:
       - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  mysql_data:

@@ -31,7 +31,6 @@ class RegisterUserController {
                 $user->getId()->getValue(),
                 $user->getName()->getValue(),
                 $user->getEmail()->getValue(),
-                $user->getPassword()->getValue(),
                 $user->getCreatedAt()->getValue()->format('Y-m-d H:i:s')
             );
             echo json_encode($response);
