@@ -7,6 +7,7 @@ use Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Application\DTO\Regi
 use Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Domain\Contracts\UserRepositoryInterface;
 use Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Domain\Entity\User;
 use Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Domain\Events\UserRegisteredEvent;
+use Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Domain\Exceptions\UserAlreadyExistsException;
 use Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Domain\ValueObjects\UserCreatedAt;
 use Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Domain\ValueObjects\UserEmail;
 use Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Domain\ValueObjects\UserId;
@@ -24,7 +25,7 @@ class RegisterUserUseCase {
 
     public function execute(RegisterUserRequest $request): User {
         if ($this->userRepository->findByEmail(new UserEmail($request->email))) {
-            throw new \Exception("Email is already in use");
+            throw new UserAlreadyExistsException();
         }
 
         $user = new User(
