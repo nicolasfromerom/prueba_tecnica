@@ -7,7 +7,6 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
 require_once '../vendor/autoload.php';
 
-$paths = [__DIR__ . '/../src'];
 $isDevMode = true;
 
 // Configuración de la conexión a la base de datos

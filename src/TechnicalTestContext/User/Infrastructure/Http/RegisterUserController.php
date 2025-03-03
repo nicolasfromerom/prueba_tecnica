@@ -18,13 +18,13 @@ class RegisterUserController {
     }
 
     public function register(): void {
-        $data = json_decode(file_get_contents("php://input"), true);
-        if (!isset($data['name'], $data['email'], $data['password'])) {
-            echo json_encode(["error" => "Invalid input"]);
-            return;
-        }
-
         try {
+
+            $data = json_decode(file_get_contents("php://input"), true);
+            if (!isset($data['name'], $data['email'], $data['password'])) {
+                throw new \InvalidArgumentException("Invalid input");
+            }
+
             $request = new RegisterUserRequest($data['name'], $data['email'], $data['password']);
             $user = $this->registerUserUseCase->execute($request);
             $response = new UserResponseDTO(

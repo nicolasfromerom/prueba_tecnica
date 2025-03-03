@@ -10,7 +10,6 @@ use Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Domain\Events\UserRe
 use Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Domain\Exceptions\UserAlreadyExistsException;
 use Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Domain\ValueObjects\UserCreatedAt;
 use Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Domain\ValueObjects\UserEmail;
-use Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Domain\ValueObjects\UserId;
 use Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Domain\ValueObjects\UserName;
 use Nicolasfromerom\PruebaTecnica\TechnicalTestContext\User\Domain\ValueObjects\UserPassword;
 
