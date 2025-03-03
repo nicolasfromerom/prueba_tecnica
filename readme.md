@@ -64,6 +64,33 @@ docker exec -it php_app bash
 
 ---
 
+## 📌 Realizar una petición al endpoint de usuario
+
+Para registrar un usuario en el sistema, puedes usar `curl` con la siguiente petición:
+
+```sh
+curl -X POST "http://localhost:8000/users" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "name": "John Doe",
+           "email": "johndoe@example.com",
+           "password": "Secure@123"
+         }'
+```
+
+Si la solicitud es exitosa, recibirás una respuesta similar a esta:
+
+```json
+{
+  "id": 1,
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "createdAt": "2025-03-03 12:00:00"
+}
+```
+
+---
+
 ## 🛠 Comandos disponibles
 
 | Comando        | Descripción                                    |
